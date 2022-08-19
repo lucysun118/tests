@@ -1,0 +1,20 @@
+{% extends "layout2.html" %}
+
+{% block body %}
+
+    <form action="/gen_templates_report" method="post">
+        <input autocomplete="off" autofocus name="input_master" placeholder="Input Master File Path Here" type="text">
+        <input autocomplete="off" autofocus name="master_worksheet" placeholder="Input Master Worksheet Name" type="text">
+
+        {% for owner in owners %}
+            <input name="sport" type="checkbox" value="{{ sport }}"> {{ sport }}
+        {% endfor %}
+
+        <input autocomplete="off" autofocus name="param_col" placeholder="Input Business Owner Template File Path Here" type="text">
+        <input autocomplete="off" autofocus name="notes_params" placeholder="Input Business Owner Template File Path Here" type="text">
+        <input autocomplete="off" autofocus name="owners_params" placeholder="Input Template File Worksheet Name" type="text">
+
+        <input type="submit">
+    </form>
+
+{% endblock %}

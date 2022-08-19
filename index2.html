@@ -1,0 +1,16 @@
+{% extends "layout2.html" %}
+
+{% block body %}
+
+        <title>Choose Functionality</title> 
+        <form action="/gen_templates">
+            <input type="submit" value="Generate Business Owner Templates">
+        </form>
+        <form action="/process_updates">
+            <input type="submit" value="Template Completion Progress Checker">
+        </form>
+        <form action="/db">
+            <input type="submit" value="See Database">
+        </form>
+
+{% endblock %}

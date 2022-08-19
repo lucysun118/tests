@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+
+{% block body %}
+        <div class="container" style="margin:15px auto">
+        <div class="row">
+        <p><h2>Vendors Info Database (and Corresponding Owner)</h2>  </p>
+        <form method="POST" id="vendors-form" action="/db">
+            <table 
+                id="example" 
+                class="table table-striped table-bordered" 
+                style="width:70%"
+                data-toggle="table"
+                data-search="true"
+                data-filter-control="true"
+                data-maintain-meta-data="true"
+                data-pagination="true"
+                data-click-to-select="true"
+                data-maintain-selected="true">
+                    <thead>
+                        <tr>
+                            <th data-checkbox="true"></th>
+                            <th data-field="Owner" data-sortable="true" data-filter-control="input">Current Owner Name</th>
+                            <th data-field="supplier_id" data-sortable="true" data-filter-control="input">Supplier ID</th>
+                            <th data-field="name" data-sortable="true" data-filter-control="input">Vendor Name</th>
+                            <th data-field="supplier_category" data-sortable="true" data-filter-control="select">Supplier Category</th>
+                            <th data-field="phone" data-sortable="false">Phone Number</th>
+                            <th data-field="email" data-sortable="false">Email Address</th>
+                            <th data-field="country" data-sortable="true" data-filter-control="select">Country</th>
+                            <th data-field="priority" data-sortable="true" data-filter-control="select">Priority</th>
+                            <th data-field="due_date" data-sortable="true" data-filter-control="select">Due Date</th>
+                            <th data-field="url" data-sortable="false">Website URL</th>
+                            <th data-field="notes" data-sortable="false">Notes</th>
+                            <th data-field="if_sent" data-sortable="true" data-filter-control="select">Sent to Current Owner?</th>
+                            <th data-field="if_remove" data-sortable="true" data-filter-control="select">Remove?</th>
+                            <th data-field="if_reassigned" data-sortable="true" data-filter-control="select">To be Reassigned?</th>
+                            <th data-field="if_completed" data-sortable="true" data-filter-control="select">Completed?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <input id="checkboxes" name="vendors_checkboxes" style="display: none">
+                        {% for vendor in vendors %}
+                        <tr>
+                            <th data-checkbox="true" name="checks" value="{{ vendor.supplier_id }}" ></th>
+                            <!-- Vendor.query.first().owners[0].name => 'Kurzman, Gregory' -->
+                            <td>{{ vendor.owners[-1].name }}</td>
+                            <td>{{ vendor.supplier_id }}</td>
+                            <td>{{ vendor.name }}</td>
+                            <!-- <td>{{ vendor.alternate_name }}</td> -->
+                            <td>{{ vendor.supplier_category }}</td>
+                            <td>{{ vendor.phone }}</td>
+                            <td>{{ vendor.email }}</td>
+                            <!-- <td>{{ vendor.created_on }}</td>
+                            <td>{{ vendor.created_by }}</td> -->
+                            <!-- <td>{{ vendor.comments }}</td> -->
+                            <td>{{ vendor.country }}</td>
+                            <td>{{ vendor.priority }}</td>
+                            <td>{{ vendor.due_date }}</td>
+                            <td>{{ vendor.url }}</td>
+                            <td>{{ vendor.notes }}</td>
+                            <td>{{ vendor.if_sent }}</td>
+                            <td>{{ vendor.if_remove }}</td>
+                            <td>{{ vendor.if_reassigned }}</td>
+                            <td>{{ vendor.if_completed }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- <p><input type="submit" action="submit"></p> -->
+                <p><button class="btn btn-danger" type="submit" id="get-selections">View Selected Owners</button></p>
+            </form>
+            </div>
+            </div>
+            <style>
+            table { 
+                width:100%;
+            }
+
+            #example_filter{
+                float:right;
+            }
+            #example_paginate{
+                float:right;
+            }
+            label {
+                display: inline-flex;
+                margin-bottom: .5rem;
+                margin-top: .5rem;
+                
+            }
+            .page-item.disabled .page-link {
+                color: #6c757d;
+                pointer-events: none;
+                cursor: auto;
+                background-color: #fff;
+                border-color: #dee2e6;
+            }
+            </style>
+            <script>
+            function checkAll(bx) {
+              var cbs = document.getElementsByTagName('input');
+              for(var i=0; i < cbs.length; i++) {
+                if(cbs[i].type == 'checkbox') {
+                  cbs[i].checked = bx.checked;
+                }
+              }
+            }
+
+            $(document).ready(function () {
+                $('#vendors-form').on('submit', function () {
+                    const table = $('#example').bootstrapTable('getSelections')
+                    $('#checkboxes').val(JSON.stringify(table))
+                })
+            }) 
+/*             $(document).ready(function () {
+                $('#vendors-form').on('submit', function () {
+                    const table = $('#example').bootstrapTable('getSelections')
+                    $('#checkboxes').val(JSON.stringify(table))
+                })
+            }) */
+            </script>  
+{% endblock %}

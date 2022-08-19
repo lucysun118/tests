@@ -1,0 +1,26 @@
+{% extends "layout2.html" %}
+
+{% block body %}
+
+    <form action="/progress_report" method="post">
+        <input autocomplete="off" autofocus name="masterpath" placeholder="Input Master File Path Here" type="text">
+        <input autocomplete="off" autofocus name="masterworksheet" placeholder="Input Master Worksheet Name" type="text">
+
+        <input autocomplete="off" autofocus name="templatepath" placeholder="Input Business Owner Template File Path Here" type="text">
+        <input autocomplete="off" autofocus name="templateworksheet" placeholder="Input Template File Worksheet Name" type="text">
+
+        <select name = "owner">
+            <option disabled selected value="">Owner</option>
+            {% for owner in owners %}
+                <option value="{{ owner }}">{{ owner }}</option>
+            {% endfor %}
+        </select>
+
+        <input autocomplete="off" autofocus name="input_flagged_col" placeholder="Input Column Letter Where Reassigned to" type="text">
+        <input autocomplete="off" autofocus name="last_row" placeholder="Last Row Number of Input" type="text">
+
+
+        <input type="submit">
+    </form>
+
+{% endblock %}

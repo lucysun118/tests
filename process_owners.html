@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    {% for owner_templates in all_vendor_templates %}
+
+    <div class="container" style="margin:15px auto">
+        <div class="row">
+        <p><h2>{{ owner_templates[0].owner[0].name }}</h2></p>
+        <form method="POST" id="consolidate_owners" action="/process_owners">
+            <table
+                class="table table-striped table-bordered" 
+                style="width:70%"
+                data-toggle="table"
+                data-search="true"
+                data-filter-control="true"
+                data-maintain-meta-data="true"
+                data-pagination="true"
+                data-click-to-select="true"
+                data-maintain-selected="true">
+                    <thead>
+                        <tr>
+                            <th data-checkbox="true"></th>
+                            <th data-field="supplier_id" data-sortable="true" data-filter-control="input">Supplier ID</th>
+                            <th data-field="supplier_name" data-sortable="true" data-filter-control="input">Supplier Name</th>
+                            <!-- <th data-field="owner" data-sortable="true" data-filter-control="input">Owner</th> -->
+                            <th data-field="due_date" data-sortable="true" data-filter-control="select">Due Date</th>
+                            <!-- <th data-field="url" data-sortable="false">Website</th> -->
+                            <th data-field="contact_name" data-sortable="false">Vendor Contact Name</th>
+                            <th data-field="contact_email" data-sortable="false">Vendor Contact Email</th>
+                            <th data-field="service_l1" data-sortable="true" data-filter-control="select">Service Level 1</th>
+                            <th data-field="service_l2" data-sortable="false">Service Level 2</th>
+                            <th data-field="service_l3" data-sortable="false">Service Level 3</th>
+                            <th data-field="service_description" data-sortable="false">Service Detailed Description</th>
+                            <th data-field="service_date" data-sortable="true" data-filter-control="select">Services Start Date</th>
+                            <th data-field="p72_owner" data-sortable="true" data-filter-control="select">Point72 Relationship Owner</th>
+                            <th data-field="countries" data-sortable="true" data-filter-control="input">Country(ies)</th>
+                            <th data-field="if_country_changes" data-sortable="true" data-filter-control="select">Changes Anticipated to Countries?</th>
+                            <th data-field="offices" data-sortable="true" data-filter-control="input">Office(s)</th>
+                            <th data-field="if_office_changes" data-sortable="true" data-filter-control="select">Changes Anticipated to Offices?</th>
+                            <th data-field="if_outsourced_services" data-sortable="true" data-filter-control="select">Provide In-House Service?</th>
+                            <th data-field="businesses_supported" data-sortable="true" data-filter-control="input">Businesses Supported</th>
+                            <th data-field="goods_provided" data-sortable="true" data-filter-control="input">Goods Provided</th>
+                            <th data-field="business_critical1" data-sortable="true" data-filter-control="select">Business Critical 1?</th>
+                            <th data-field="business_critical2" data-sortable="true" data-filter-control="select">Business Critical 2?</th>
+                            <th data-field="proprietary" data-sortable="true" data-filter-control="select">Proprietary Data?</th>
+                            <th data-field="internal" data-sortable="true" data-filter-control="select">Internal Data?</th>
+                            <th data-field="infosec" data-sortable="true" data-filter-control="select">Confidential Data?</th>
+                            <th data-field="addl_services" data-sortable="true" data-filter-control="select">Additional Services?</th>
+                            <th data-field="if_sent" data-sortable="true" data-filter-control="select">Sent to Owner?</th>
+                            <th data-field="if_remove" data-sortable="true" data-filter-control="select">Remove?</th>
+                            <th data-field="if_reassigned" data-sortable="true" data-filter-control="select">To be Reassigned?</th>
+                            <th data-field="if_completed" data-sortable="true" data-filter-control="select">Completed?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <input id="checkboxes2" name="owners_checkboxes" style="display: none"> -->
+                        {% for template in owner_templates %}
+                        <tr>
+                            <th data-checkbox="true" name="checks" value="{{ template.id }}" ></th>
+                            <!-- Vendor.query.first().owners[0].name => 'Kurzman, Gregory' -->
+                            
+                            <td>{{ template.vendor.supplier_id }}</td>
+                            <td>{{ template.vendor.name }}</td>
+                            <td>{{ template.due_date }}</td>
+                            <td>{{ template.vendor_manager }}</td>
+                            <td>{{ template.manager_email }}</td>
+                            <td>{{ template.l1_service }}</td>
+                            <td>{{ template.l2_service }}</td>
+                            <td>{{ template.l3_service }}</td>
+                            <td>{{ template.service_description }}</td>
+                            <td>{{ template.onboarding_year }}</td>
+                            <td>{{ template.p72_owner }}</td>
+                            <td>{{ template.countries }}</td>
+                            <td>{{ template.countries_changes }}</td>
+                            <td>{{ template.offices }}</td>
+                            <td>{{ template.offices_changes }}</td>
+                            <td>{{ template.in_house }}</td>
+                            <td>{{ template.businesses }}</td>
+                            <td>{{ template.products }}</td>
+                            <td>{{ template.business_critical1 }}</td>
+                            <td>{{ template.business_critical2 }}</td>
+                            <td>{{ template.proprietary }}</td>
+                            <td>{{ template.internal_data }}</td>
+                            <td>{{ template.confidential }}</td>
+                            <td>{{ template.another_service }}</td>
+                            <td>{{ template.vendor.if_sent }}</td>
+                            <td>{{ template.vendor.if_remove }}</td>
+                            <td>{{ template.vendor.if_reassigned }}</td>
+                            <td>{{ template.vendor.if_completed }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- <p><button class="btn btn-danger" type="submit" id="get-selections">View Selected Owners</button></p> -->
+            </form>
+            </div>
+            </div>
+            <p></p>
+            <style>
+            table { 
+                width:100%;
+            }
+
+            #example_filter{
+                float:right;
+            }
+            #example_paginate{
+                float:right;
+            }
+            label {
+                display: inline-flex;
+                margin-bottom: .5rem;
+                margin-top: .5rem;
+                
+            }
+            .page-item.disabled .page-link {
+                color: #6c757d;
+                pointer-events: none;
+                cursor: auto;
+                background-color: #fff;
+                border-color: #dee2e6;
+            }
+            </style>
+    {% endfor %}
+
+{% endblock %}
